@@ -12,6 +12,10 @@ class Box < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :visits,
+             :through => :bookmarks,
+             :source => :user
+
   # Validations
 
 end
