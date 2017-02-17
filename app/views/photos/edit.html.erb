@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @photo.errors.any? %>
+  <% @photo.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Photo #<%= @photo.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_photo/<%= @photo.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for box_id -->
+      <div class="form-group">
+        <label for="box_id" class="control-label">
+          Box
+        </label>
+
+        <%= select_tag(:box_id, options_from_collection_for_select(Box.all, :id, :city_id, @photo.box_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for food_option_id -->
+      <div class="form-group">
+        <label for="food_option_id" class="control-label">
+          Food option
+        </label>
+
+        <%= select_tag(:food_option_id, options_from_collection_for_select(FoodOption.all, :id, :city_id, @photo.food_option_id), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-warning">
+        Update Photo
+      </button>
+      or
+      <a href="/photos/<%= @photo.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

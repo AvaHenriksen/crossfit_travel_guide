@@ -1,12 +1,18 @@
 class BoxesController < ApplicationController
   def index
     @q = Box.ransack(params[:q])
-    @boxes = @q.result(:distinct => true).includes(:bookmarks, :comments, :city, :visits).page(params[:page]).per(10)
+    @boxes = @q.result(:distinct => true).includes(:bookmarks, :comments, :photos, :city, :visits).page(params[:page]).per(10)
+    @location_hash = Gmaps4rails.build_markers(@boxes.where.not(:address_latitude => nil)) do |box, marker|
+      marker.lat box.address_latitude
+      marker.lng box.address_longitude
+      marker.infowindow "<h5><a href='/boxes/#{box.id}'>#{box.city_id}</a></h5><small>#{box.address_formatted_address}</small>"
+    end
 
     render("boxes/index.html.erb")
   end
 
   def show
+    @photo = Photo.new
     @comment = Comment.new
     @bookmark = Bookmark.new
     @box = Box.find(params[:id])
@@ -25,6 +31,8 @@ class BoxesController < ApplicationController
 
     @box.city_id = params[:city_id]
     @box.details = params[:details]
+    @box.name = params[:name]
+    @box.address = params[:address]
 
     save_status = @box.save
 
@@ -53,6 +61,8 @@ class BoxesController < ApplicationController
 
     @box.city_id = params[:city_id]
     @box.details = params[:details]
+    @box.name = params[:name]
+    @box.address = params[:address]
 
     save_status = @box.save
 

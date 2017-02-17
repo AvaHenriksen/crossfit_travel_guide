@@ -3,6 +3,8 @@ class CreateBoxes < ActiveRecord::Migration
     create_table :boxes do |t|
       t.integer :city_id
       t.text :details
+      t.string :name
+      t.string :address
 
       t.timestamps
 

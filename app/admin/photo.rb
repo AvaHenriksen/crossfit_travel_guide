@@ -1,6 +1,6 @@
-ActiveAdmin.register FoodOption do
+ActiveAdmin.register Photo do
 
- permit_params :city_id, :details, :name, :address
+ permit_params :box_id, :food_option_id
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

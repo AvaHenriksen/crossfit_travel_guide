@@ -9,6 +9,11 @@
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
+    <%= f.label :name_cont, "Name contains" %>
+    <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
+  </div>
+
+<div class="form-group">
     <%= f.label :details_cont, "Details contains" %>
     <%= f.text_field :details_cont, :class => "form-control", :placeholder => "Details contains" %>
   </div>
@@ -54,44 +59,9 @@
       </script>
 
         <div class="form-group">
-          <%= f.label :created_at, "City Created at" %>
-          <div class="row">
-            <div class='col-md-6 mb-1'>
-              <div class='input-group date' id='citygteqcreated_atPicker'>
-                  <%= f.text_field :city_created_at_gteq, :class => "form-control", :placeholder => "City Created at greater than or equal to" %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-            </div>
-
-            <div class='col-md-6'>
-              <div class='input-group date' id='citylteqcreated_atPicker'>
-                  <%= f.text_field :city_created_at_lteq, :class => "form-control", :placeholder => "City Created at less than or equal to" %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-            </div>
-          </div>
-      </div>
-      <script type="text/javascript">
-          $(function () {
-              $('#citygteqcreated_atPicker').datetimepicker({
-                  format: 'YYYY-MM-DD hh:mm:SS'
-              });
-              $('#citylteqcreated_atPicker').datetimepicker({
-                  useCurrent: false,
-                  format: 'YYYY-MM-DD hh:mm:SS'
-              });
-              $('#citygteqcreated_atPicker').on("dp.change", function (e) {
-                  $('#citylteqcreated_atPicker').data("DateTimePicker").minDate(e.date);
-              });
-              $('#citylteqcreated_atPicker').on("dp.change", function (e) {
-                  $('#citygteqcreated_atPicker').data("DateTimePicker").maxDate(e.date);
-              });
-          });
-      </script>
+      <%= f.label :city_name_cont, "City name contains" %>
+      <%= f.text_field :city_name_cont, :class => "form-control", :placeholder => "City name contains" %>
+    </div>
 
 <div class="form-group">
       <%= f.label :visits_email_cont, "User email contains" %>
@@ -108,12 +78,23 @@
   </div>
 </div>
 
+
+<div class="row m-b-2">
+  <div class="col-md-12">
+    <div>
+      <div id="location_map" style="height: 480px;"></div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <table class="table table-striped table-hover">
       <tr>
         <th>City</th>
         <th>Details</th>
+        <th>Name</th>
+        <th>Address</th>
         <th>Actions</th>
       </tr>
 
@@ -122,11 +103,13 @@
         <td>
           <% if box.city.present? %>
             <a href="/cities/<%= box.city.id %>">
-              <%= box.city.created_at %>
+              <%= box.city.name %>
             </a>
           <% end %>
         </td>
         <td><%= box.details %></td>
+        <td><%= box.name %></td>
+        <td><%= box.address %></td>
         <td>
           <a href="/boxes/<%= box.id %>" class="btn btn-primary">Show</a>
           <a href="/boxes/<%= box.id %>/edit" class="btn btn-warning">Edit</a>
@@ -138,3 +121,14 @@
     <%= paginate @boxes, theme: 'twitter-bootstrap-4' %>
   </div>
 </div>
+
+<script src="//maps.google.com/maps/api/js?v=3.24&key=AIzaSyCOTPWiuvyyo6sKoIBzKA4-1ol-vTOIOlM"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+<script>
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'location_map'}}, function(){
+    markers = handler.addMarkers(<%= raw @location_hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+</script>
