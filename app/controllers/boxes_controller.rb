@@ -1,6 +1,7 @@
 class BoxesController < ApplicationController
   def index
-    @boxes = Box.page(params[:page]).per(10)
+    @q = Box.ransack(params[:q])
+    @boxes = @q.result(:distinct => true).includes(:bookmarks, :comments, :city, :visits).page(params[:page]).per(10)
 
     render("boxes/index.html.erb")
   end
