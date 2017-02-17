@@ -16,7 +16,7 @@
 
       <% @boxes.each do |box| %>
       <tr>
-        <td><%= box.city_id %></td>
+        <td><%= box.city.created_at %></td>
         <td><%= box.details %></td>
         <td>
           <a href="/boxes/<%= box.id %>" class="btn btn-primary">Show</a>
