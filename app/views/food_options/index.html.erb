@@ -16,7 +16,13 @@
 
       <% @food_options.each do |food_option| %>
       <tr>
-        <td><%= food_option.city.created_at %></td>
+        <td>
+          <% if food_option.city.present? %>
+            <a href="/cities/<%= food_option.city.id %>">
+              <%= food_option.city.created_at %>
+            </a>
+          <% end %>
+        </td>
         <td><%= food_option.details %></td>
         <td>
           <a href="/food_options/<%= food_option.id %>" class="btn btn-primary">Show</a>

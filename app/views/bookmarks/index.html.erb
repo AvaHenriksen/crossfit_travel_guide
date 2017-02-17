@@ -17,9 +17,27 @@
 
       <% @bookmarks.each do |bookmark| %>
       <tr>
-        <td><%= bookmark.box.city_id %></td>
-        <td><%= bookmark.food_option.city_id %></td>
-        <td><%= bookmark.user.email %></td>
+        <td>
+          <% if bookmark.box.present? %>
+            <a href="/boxes/<%= bookmark.box.id %>">
+              <%= bookmark.box.city_id %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if bookmark.food_option.present? %>
+            <a href="/food_options/<%= bookmark.food_option.id %>">
+              <%= bookmark.food_option.city_id %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if bookmark.user.present? %>
+            <a href="/users/<%= bookmark.user.id %>">
+              <%= bookmark.user.email %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/bookmarks/<%= bookmark.id %>" class="btn btn-primary">Show</a>
           

@@ -16,7 +16,13 @@
 
       <% @boxes.each do |box| %>
       <tr>
-        <td><%= box.city.created_at %></td>
+        <td>
+          <% if box.city.present? %>
+            <a href="/cities/<%= box.city.id %>">
+              <%= box.city.created_at %>
+            </a>
+          <% end %>
+        </td>
         <td><%= box.details %></td>
         <td>
           <a href="/boxes/<%= box.id %>" class="btn btn-primary">Show</a>
