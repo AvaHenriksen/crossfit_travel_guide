@@ -24,7 +24,7 @@
           Box
         </label>
 
-        <input type="text" id="box_id" name="box_id" placeholder="Box" class="form-control" value="<%= @bookmark.box_id %>">
+        <%= select_tag(:box_id, options_from_collection_for_select(Box.all, :id, :city_id, @bookmark.box_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for food_option_id -->
