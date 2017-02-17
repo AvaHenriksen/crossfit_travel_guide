@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :saved_food_options,
+             :through => :bookmarks,
+             :source => :food_option
+
   has_many   :saved_boxes,
              :through => :bookmarks,
              :source => :box
