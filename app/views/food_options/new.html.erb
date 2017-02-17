@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @food_option.errors.any? %>
+  <% @food_option.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Food Option</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_food_option" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for city_id -->
+      <div class="form-group">
+        <label for="city_id" class="control-label">
+          City
+        </label>
+
+        <input type="text" id="city_id" name="city_id" placeholder="City" class="form-control" value="<%= @food_option.city_id %>">
+      </div>
+
+      <!-- Label and input for details -->
+      <div class="form-group">
+        <label for="details" class="control-label">
+          Details
+        </label>
+
+        <textarea id="details" name="details" placeholder="Details" class="form-control" rows="3"><%= @food_option.details %></textarea>
+      </div>
+
+      <button class="btn btn-success">
+        Create Food Option
+      </button>
+      or
+      <a href="/food_options">Cancel</a>
+    </form>
+  </div>
+</div>
