@@ -33,7 +33,7 @@
           Food option
         </label>
 
-        <input type="text" id="food_option_id" name="food_option_id" placeholder="Food option" class="form-control" value="<%= @bookmark.food_option_id %>">
+        <%= select_tag(:food_option_id, options_from_collection_for_select(FoodOption.all, :id, :city_id, @bookmark.food_option_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for user_id -->
