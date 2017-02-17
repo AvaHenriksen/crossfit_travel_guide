@@ -42,7 +42,7 @@
           Food option
         </label>
 
-        <input type="text" id="food_option_id" name="food_option_id" placeholder="Food option" class="form-control" value="<%= @comment.food_option_id %>">
+        <%= select_tag(:food_option_id, options_from_collection_for_select(FoodOption.all, :id, :city_id, @comment.food_option_id), :class => "form-control") %>
       </div>
 
       <button class="btn btn-warning">
