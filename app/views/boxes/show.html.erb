@@ -54,6 +54,32 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_bookmark" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for box_id -->
+      <input type="hidden" name="box_id" value="<%= @box.id %>">
+
+      <!-- Label and input for food_option_id -->
+      <div class="form-group">
+        <label for="food_option_id" class="control-label">
+          Food option
+        </label>
+
+        <%= select_tag(:food_option_id, options_from_collection_for_select(FoodOption.all, :id, :city_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+      <button class="btn btn-block btn-success">
+        Create Bookmark
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>
@@ -85,6 +111,38 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_comment" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for box_id -->
+      <input type="hidden" name="box_id" value="<%= @box.id %>">
+
+      <!-- Label and input for food_option_id -->
+      <div class="form-group">
+        <label for="food_option_id" class="control-label">
+          Food option
+        </label>
+
+        <%= select_tag(:food_option_id, options_from_collection_for_select(FoodOption.all, :id, :city_id), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-block btn-success">
+        Create Comment
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>

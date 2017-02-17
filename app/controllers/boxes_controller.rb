@@ -6,6 +6,8 @@ class BoxesController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @bookmark = Bookmark.new
     @box = Box.find(params[:id])
 
     render("boxes/show.html.erb")

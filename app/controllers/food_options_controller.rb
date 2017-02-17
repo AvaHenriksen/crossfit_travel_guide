@@ -6,6 +6,8 @@ class FoodOptionsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @bookmark = Bookmark.new
     @food_option = FoodOption.find(params[:id])
 
     render("food_options/show.html.erb")
