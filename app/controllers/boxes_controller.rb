@@ -1,6 +1,6 @@
 class BoxesController < ApplicationController
   def index
-    @boxes = Box.all
+    @boxes = Box.page(params[:page]).per(10)
 
     render("boxes/index.html.erb")
   end
