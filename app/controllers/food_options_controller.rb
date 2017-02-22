@@ -1,12 +1,18 @@
 class FoodOptionsController < ApplicationController
   def index
     @q = FoodOption.ransack(params[:q])
-    @food_options = @q.result(:distinct => true).includes(:city, :bookmarks, :comments, :visits).page(params[:page]).per(10)
+    @food_options = @q.result(:distinct => true).includes(:city, :bookmarks, :comments, :photos, :visits).page(params[:page]).per(10)
+    @location_hash = Gmaps4rails.build_markers(@food_options.where.not(:address_latitude => nil)) do |food_option, marker|
+      marker.lat food_option.address_latitude
+      marker.lng food_option.address_longitude
+      marker.infowindow "<h5><a href='/food_options/#{food_option.id}'>#{food_option.city_id}</a></h5><small>#{food_option.address_formatted_address}</small>"
+    end
 
     render("food_options/index.html.erb")
   end
 
   def show
+    @photo = Photo.new
     @comment = Comment.new
     @bookmark = Bookmark.new
     @food_option = FoodOption.find(params[:id])
@@ -25,6 +31,8 @@ class FoodOptionsController < ApplicationController
 
     @food_option.city_id = params[:city_id]
     @food_option.details = params[:details]
+    @food_option.name = params[:name]
+    @food_option.address = params[:address]
 
     save_status = @food_option.save
 
@@ -53,6 +61,8 @@ class FoodOptionsController < ApplicationController
 
     @food_option.city_id = params[:city_id]
     @food_option.details = params[:details]
+    @food_option.name = params[:name]
+    @food_option.address = params[:address]
 
     save_status = @food_option.save
 

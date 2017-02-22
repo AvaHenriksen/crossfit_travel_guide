@@ -24,6 +24,8 @@ class CommentsController < ApplicationController
     @comment.user_id = params[:user_id]
     @comment.box_id = params[:box_id]
     @comment.food_option_id = params[:food_option_id]
+    @comment.body = params[:body]
+    @comment.datetime = params[:datetime]
 
     save_status = @comment.save
 
@@ -53,6 +55,8 @@ class CommentsController < ApplicationController
     @comment.user_id = params[:user_id]
     @comment.box_id = params[:box_id]
     @comment.food_option_id = params[:food_option_id]
+    @comment.body = params[:body]
+    @comment.datetime = params[:datetime]
 
     save_status = @comment.save
 

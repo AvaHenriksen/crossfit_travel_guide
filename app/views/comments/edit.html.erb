@@ -45,6 +45,24 @@
         <%= select_tag(:food_option_id, options_from_collection_for_select(FoodOption.all, :id, :city_id, @comment.food_option_id), :class => "form-control") %>
       </div>
 
+      <!-- Label and input for body -->
+      <div class="form-group">
+        <label for="body" class="control-label">
+          Body
+        </label>
+
+        <textarea id="body" name="body" placeholder="Body" class="form-control" rows="3"><%= @comment.body %></textarea>
+      </div>
+
+      <!-- Label and input for datetime -->
+      <div class="form-group">
+        <label for="datetime" class="control-label">
+          Datetime
+        </label>
+
+        <input type="text" id="datetime" name="datetime" placeholder="Datetime" class="form-control" value="<%= @comment.datetime %>">
+      </div>
+
       <button class="btn btn-warning">
         Update Comment
       </button>
