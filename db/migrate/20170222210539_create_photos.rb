@@ -1,7 +1,6 @@
-class CreateComments < ActiveRecord::Migration
+class CreatePhotos < ActiveRecord::Migration
   def change
-    create_table :comments do |t|
-      t.integer :user_id
+    create_table :photos do |t|
       t.integer :box_id
       t.integer :food_option_id
 

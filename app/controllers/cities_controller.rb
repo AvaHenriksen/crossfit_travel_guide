@@ -2,6 +2,11 @@ class CitiesController < ApplicationController
   def index
     @q = City.ransack(params[:q])
     @cities = @q.result(:distinct => true).includes(:boxes, :food_options).page(params[:page]).per(10)
+    @location_hash = Gmaps4rails.build_markers(@cities.where.not(:location_latitude => nil)) do |city, marker|
+      marker.lat city.location_latitude
+      marker.lng city.location_longitude
+      marker.infowindow "<h5><a href='/cities/#{city.id}'>#{city.name}</a></h5><small>#{city.location_formatted_address}</small>"
+    end
 
     render("cities/index.html.erb")
   end
@@ -23,6 +28,8 @@ class CitiesController < ApplicationController
   def create
     @city = City.new
 
+    @city.name = params[:name]
+    @city.location = params[:location]
 
     save_status = @city.save
 
@@ -49,6 +56,8 @@ class CitiesController < ApplicationController
   def update
     @city = City.find(params[:id])
 
+    @city.name = params[:name]
+    @city.location = params[:location]
 
     save_status = @city.save
 
